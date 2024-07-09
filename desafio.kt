@@ -1,21 +1,77 @@
-// [Template no Kotlin Playground](https://pl.kotl.in/WcteahpyN)
+fun main() {
+    val user1 = Usuario("Paulo", "paulo@gmail.com", 35)
+    val user2 = Usuario("Cleber", "ckb@gmail.com", 21)
 
-enum class Nivel { BASICO, INTERMEDIARIO, DIFICIL }
+    val contet1 = ConteudoEducacional("Introdução ao Kotlin", 90, "Conceitos básicos de Kotlin", "Professor A")
+    val contet2 = ConteudoEducacional("Introdução ao Java", 90, "Conceitos básicos de Kotlin", "Professor asaw")
 
-class Usuario
+    val formacaoJava = Formacao("Formação Java", Nivel.INTERMEDIARIO)
+    formacaoJava.addConteudo(strings)
+    formacaoJava.addConteudo(arrays)
 
-data class ConteudoEducacional(var nome: String, val duracao: Int = 60)
+    formacaoJava.matricular(user1)
+    formacaoJava.matricular(user2)
 
-data class Formacao(val nome: String, var conteudos: List<ConteudoEducacional>) {
+    formacaoJava.details()
+
+
+}
+
+enum class Nivel { INICIANTE, INTERMEDIARIO, AVANÇADO }
+
+data class Usuario (
+    val name: String,
+    val email: String,
+    val idade: Int
+)
+
+data class ConteudoEducacional(
+    val nome: String,
+    val duracao: Int = 60
+    val autor: String
+)
+
+
+class Formacao(
+    val nome: String,
+    val nivel: Int,
+    var conteudos: MutableList<ConteudoEducacional> = mutableListOf()
+) {
 
     val inscritos = mutableListOf<Usuario>()
-    
+
     fun matricular(usuario: Usuario) {
-        TODO("Utilize o parâmetro $usuario para simular uma matrícula (usar a lista de $inscritos).")
+        inscritos.add(usuario)
+        println("Usuario ${usuario.name} matriculado na formação $name")
+
     }
+
+    fun addConteudo(conteudo: ConteudoEducacional) {
+        conteudos.add(conteudo)
+        println("Conteudo ${conteudo.nome} adicionado a formação $nome")
+    }
+
+    fun removeContent(conteudo: ConteudoEducacional) {
+        conteudos.remove(conteudo)
+        println("Conteudo ${conteudo.nome} removido...")
+    }
+
+    fun details() {
+        println("Formação: $nome")
+        println("Nivel: $nivel")
+        println("Conteudos: ")
+
+        for (conteudo in conteudos) {
+            println(" - ${conteudo.nome} (${conteudo.duracao} minutos) - (por ${conteudo.autor})")
+        }
+
+        for (inscrito in inscritos) {
+            println("- ${ïnscrito.nome}  (${inscrito.email})")
+        }
+
+    }
+
+
 }
 
-fun main() {
-    TODO("Analise as classes modeladas para este domínio de aplicação e pense em formas de evoluí-las.")
-    TODO("Simule alguns cenários de teste. Para isso, crie alguns objetos usando as classes em questão.")
-}
+
