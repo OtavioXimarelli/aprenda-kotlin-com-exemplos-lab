@@ -1,78 +1,78 @@
-enum class Nivel { INICIANTE, INTERMEDIARIO, AVANÇADO }
+enum class Level { BEGINNER, INTERMEDIATE, ADVANCED }
 
-data class Usuario(
-    val nome: String,
+data class User(
+    val name: String,
     val email: String,
-    val idade: Int
+    val age: Int
 )
 
-data class ConteudoEducacional(
-    val nome: String,
-    val duracao: Int = 60, // Duração padrão de 60 minutos
-    val autor: String
+data class EducationalContent(
+    val name: String,
+    val duration: Int = 60, // Default duration of 60 minutes
+    val author: String
 )
 
-class Formacao(
-    val nome: String,
-    val nivel: Nivel, // Usando o enum Nivel para representar o nível
-    var conteudos: MutableList<ConteudoEducacional> = mutableListOf()
+class Course(
+    val name: String,
+    val level: Level, // Using the Level enum to represent the level
+    var contents: MutableList<EducationalContent> = mutableListOf()
 ) {
-    val inscritos = mutableListOf<Usuario>()
+    val enrolledStudents = mutableListOf<User>()
 
-    fun matricular(usuario: Usuario) {
-        inscritos.add(usuario)
-        println("Usuário ${usuario.nome} matriculado na formação $nome")
+    fun enroll(user: User) {
+        enrolledStudents.add(user)
+        println("User ${user.name} enrolled in course $name")
     }
 
-    fun addConteudo(conteudo: ConteudoEducacional) {
-        conteudos.add(conteudo)
-        println("Conteúdo ${conteudo.nome} adicionado à formação $nome")
+    fun addContent(content: EducationalContent) {
+        contents.add(content)
+        println("Content ${content.name} added to course $name")
     }
 
-    fun removeConteudo(conteudo: ConteudoEducacional) {
-        if (conteudos.remove(conteudo)) {
-            println("Conteúdo ${conteudo.nome} removido da formação $nome")
+    fun removeContent(content: EducationalContent) {
+        if (contents.remove(content)) {
+            println("Content ${content.name} removed from course $name")
         } else {
-            println("Conteúdo ${conteudo.nome} não encontrado na formação $nome")
+            println("Content ${content.name} not found in course $name")
         }
     }
 
     fun details() {
-        println("Formação: $nome")
-        println("Nível: $nivel") // Imprime o nome do nível (ex: "INTERMEDIARIO")
-        println("Conteúdos:")
-        if (conteudos.isEmpty()) {
-            println("   Nenhum conteúdo adicionado ainda.")
+        println("Course: $name")
+        println("Level: $level") // Prints the name of the level (e.g., "INTERMEDIATE")
+        println("Contents:")
+        if (contents.isEmpty()) {
+            println("   No content added yet.")
         } else {
-            for (conteudo in conteudos) {
-                println(" - ${conteudo.nome} (${conteudo.duracao} minutos) - (por ${conteudo.autor})")
+            for (content in contents) {
+                println(" - ${content.name} (${content.duration} minutes) - (by ${content.author})")
             }
         }
 
-        println("Inscritos:")
-        if (inscritos.isEmpty()) {
-            println("   Nenhum inscrito ainda.")
+        println("Enrolled Students:")
+        if (enrolledStudents.isEmpty()) {
+            println("   No students enrolled yet.")
         } else {
-            for (inscrito in inscritos) {
-                println(" - ${inscrito.nome} (${inscrito.email})")
+            for (student in enrolledStudents) {
+                println(" - ${student.name} (${student.email})")
             }
         }
     }
 }
 
 fun main() {
-    val user1 = Usuario("Paulo", "paulo@gmail.com", 35)
-    val user2 = Usuario("Cleber", "ckb@gmail.com", 21)
+    val user1 = User("Paul", "paul@gmail.com", 35)
+    val user2 = User("Cleber", "ckb@gmail.com", 21)
 
-    val contet1 = ConteudoEducacional("Introdução ao Kotlin", 90, "Professor A")
-    val contet2 = ConteudoEducacional("Introdução ao Java", 120, "Professor B") // Duração alterada para 120 minutos
+    val content1 = EducationalContent("Introduction to Kotlin", 90, "Professor A")
+    val content2 = EducationalContent("Introduction to Java", 120, "Professor B") // Duration changed to 120 minutes
 
-    val formacaoJava = Formacao("Formação Java", Nivel.INTERMEDIARIO)
-    formacaoJava.addConteudo(contet1) // Adicionando os conteúdos corretos
-    formacaoJava.addConteudo(contet2)
+    val javaCourse = Course("Java Course", Level.INTERMEDIATE)
+    javaCourse.addContent(content1) // Adding the correct contents
+    javaCourse.addContent(content2)
 
-    formacaoJava.matricular(user1)
-    formacaoJava.matricular(user2)
+    javaCourse.enroll(user1)
+    javaCourse.enroll(user2)
 
-    formacaoJava.details()
+    javaCourse.details()
 }
